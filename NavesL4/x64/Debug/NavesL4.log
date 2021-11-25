@@ -1,0 +1,101 @@
+﻿  Actor.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Actor.cpp(7,12): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Actor.cpp(8,12): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Actor.cpp(27,32): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Actor.cpp(28,33): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Animation.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(10,21): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(11,22): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(13,20): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(14,21): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(29,13): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(30,13): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(54,26): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(61,20): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Animation.cpp(62,20): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Background.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Background.cpp(19,9): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  DoorTile.cpp
+  Enemy.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Enemy.cpp(12,57): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Enemy.cpp(12,50): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Enemy.cpp(14,63): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Enemy.cpp(14,56): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  Game.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Game.cpp(82,20): warning C4305: '-=': truncamiento de 'double' a 'float'
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Game.cpp(84,56): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Game.cpp(84,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  GameLayer.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(12,95): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(20,66): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(128,18): error C2440: '=': no se puede realizar la conversión de 'DoorTile *const ' a 'int'
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(128,18): message : No existe un contexto en el que sea posible realizar esta conversión
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(129,5): error C2143: error de sintaxis: falta ';' delante de '}'
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(201,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(208,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(216,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(223,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(273,33): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(278,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(279,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(406,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(406,26): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(409,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(412,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(412,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(415,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(415,33): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(421,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(421,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(424,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(424,33): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(427,51): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(427,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(428,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(442,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(442,26): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(447,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(447,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(450,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\GameLayer.cpp(450,33): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  Layer.cpp
+  Main.cpp
+  MenuLayer.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\MenuLayer.cpp(91,38): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\MenuLayer.cpp(91,29): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  Pad.cpp
+  Player.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(12,10): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(12,3): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(14,10): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(14,3): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(16,68): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(16,61): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(18,69): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(18,62): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(20,76): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(20,69): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(22,77): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(22,70): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(25,10): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(25,3): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(27,10): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(27,3): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(139,46): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(139,43): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Player.cpp(156,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+  Projectile.cpp
+  Space.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Space.cpp(47,30): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Space.cpp(77,26): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Space.cpp(84,30): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Space.cpp(116,26): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Space.cpp(122,30): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Space.cpp(154,26): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Space.cpp(160,30): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Space.cpp(193,26): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+  Text.cpp
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Text.cpp(5,12): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-Plataformas\NavesL4\Text.cpp(6,12): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+  Tile.cpp
+  Generando código...
