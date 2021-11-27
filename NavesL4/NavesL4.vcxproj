@@ -164,6 +164,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BaseCamp.cpp" />
+    <ClCompile Include="BaseEnemy.cpp" />
     <ClCompile Include="Cannon.cpp" />
     <ClCompile Include="DoorTile.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -176,7 +177,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Recolectable.cpp" />
-    <ClCompile Include="ShootingActor.cpp" />
+    <ClCompile Include="ShootingAction.cpp" />
     <ClCompile Include="Space.cpp" />
     <ClCompile Include="SpawnerEnemy.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Background.h" />
     <ClInclude Include="BaseCamp.h" />
+    <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="Cannon.h" />
     <ClInclude Include="DoorTile.h" />
     <ClInclude Include="Enemy.h" />
@@ -198,7 +200,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Recolectable.h" />
-    <ClInclude Include="ShootingActor.h" />
+    <ClInclude Include="ShootingAction.h" />
     <ClInclude Include="Space.h" />
     <ClInclude Include="SpawnerEnemy.h" />
     <ClInclude Include="Text.h" />

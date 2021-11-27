@@ -40,7 +40,7 @@ public:
 	int currentLevel = 0;
 	int finalLevel = 3;
 
-	/* Input sectino */
+	/* Input section */
 	int input;
 	int const inputKeyboard = 1;
 	int const inputMouse = 2;
@@ -48,10 +48,10 @@ public:
 
 	/* States of the player */
 	int const stateMoving = 1;
-	int const stateJumping = 2;
-	int const stateDying = 3;
-	int const stateDead = 4;
-	int const stateShooting = 5;
+	int const stateDying = 2;
+	int const stateDead = 3;
+	int const stateShooting = 4;
+	int const stateIdle = 5;
 
 	/* Orientation for the actors */
 	int const orientationRight = 1;

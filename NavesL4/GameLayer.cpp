@@ -10,19 +10,16 @@ GameLayer::GameLayer(Game* game)
 }
 
 void GameLayer::init() {
-	if (game->currentLevel == 0) {
-		recolectableItems = 0;
-		points = 0;
-	}
 	pad = new Pad(WIDTH * 0.15, HEIGHT * 0.80, game);
 	buttonJump = new Actor("res/boton_salto.png", WIDTH * 0.9, HEIGHT * 0.55, 100, 100, game);
 	buttonShoot = new Actor("res/boton_disparo.png", WIDTH * 0.75, HEIGHT * 0.83, 100, 100, game);
+	points = 0;
 
 	space = new Space(0);
 	scrollX = 0;
 	scrollY = 0;
 	tiles.clear();
-	recolectables.clear();
+
 	// Resetear el struct con variables guardadas
 	savedVariables.savingCoords[0] = NO_POSITION_ASSIGNED;
 	savedVariables.savingCoords[1] = NO_POSITION_ASSIGNED;
@@ -35,10 +32,11 @@ void GameLayer::init() {
 	backgroundPoints = new Actor("res/icono_puntos.png",
 		WIDTH * 0.85, HEIGHT * 0.05, 24, 24, game); // WIDTH/HEIGHT * x -> mas sencillo cuadrar en pantalla
 
-	recolectablesImage = new Actor("res/icono_recolectable.png", WIDTH * 0.28, HEIGHT * 0.08, 40, 40, game);
-	recolectablesPoints = new Text("Recolectables here", WIDTH * 0.35, HEIGHT * 0.07, game);
-	recolectablesPoints->content = to_string(recolectableItems);
+	currentWave = 0;
+	currentWaveText = new Text("Wave here", WIDTH * 0.35, HEIGHT * 0.07, game);
+	currentWaveText->content = to_string(currentWave);
 
+	spawnerEnemies.clear();
 	enemies.clear(); // Vaciar por si reiniciamos el juego
 	projectiles.clear(); // Vaciar por si reiniciamos el juego
 
@@ -46,7 +44,7 @@ void GameLayer::init() {
 
 	lifesLeftImage = new Actor("res/icono_vidas.png", WIDTH * 0.07, HEIGHT * 0.08, 40, 40, game);
 	lifePoints = new Text("Lifes here", WIDTH * 0.14, HEIGHT * 0.07, game);
-	lifePoints->content = to_string(player->lifes);
+	lifePoints->content = to_string(baseCamp->lifes);
 }
 
 void GameLayer::update() {
@@ -63,28 +61,24 @@ void GameLayer::update() {
 		enemy->update();
 	}
 
-	/*
-	spawnerEnemy->update();
-	if (spawnerEnemy->timeToGenerate > 0) {
-		spawnerEnemy->timeToGenerate--;
-	}
-	if (spawnerEnemy->timeToGenerate == 0) {
-		for (auto const& enemy : spawnerEnemy->spawnEnemies()) {
-			enemies.push_back(enemy);
-			space->addDynamicActor(enemy);
+	/* Generacion de enemigos por los spawnerEnemies */
+	for (auto const& spawnerEnemy : spawnerEnemies) {
+		if (spawnerEnemy->state == game->stateMoving && spawnerEnemy->timeToGenerate <= 0) {
+			for (auto const& enemy : spawnerEnemy->spawnEnemies()) {
+				enemies.push_back(enemy);
+				space->addDynamicActor(enemy);
+			}
 		}
 	}
-	*/
 
 	/* Colisiones */
 	for (auto const& enemy : enemies) {
 		// If enemies are in the process of diying they wont kill you
-		if ((player->isOverlap(enemy) && enemy->state==game->stateMoving) 
-			/*|| player->isOverlap(spawnerEnemy)*/) {
-			player->loseLife();
-			lifePoints->content = to_string(player->lifes);
-			if (player->lifes <= 0) {
-				lifePoints->content = to_string(player->lifes);
+		if (baseCamp->isOverlap(enemy) && enemy->state == game->stateMoving) {
+			baseCamp->loseLife();
+			lifePoints->content = to_string(baseCamp->lifes);
+			if (baseCamp->lifes <= 0) {
+				lifePoints->content = to_string(baseCamp->lifes);
 				message = new Actor("res/mensaje_perder.png", WIDTH * 0.5, HEIGHT * 0.5,
 					WIDTH, HEIGHT, game);
 				pause = true;
@@ -93,42 +87,39 @@ void GameLayer::update() {
 				break;
 			}
 		}
-	}
-	/* Reducir el tiempo de espera de las oleadas */
-	for (auto const& enemy : enemies) {
-		if (enemy->timeLeftToMove >= 0) {
-			enemy->timeLeftToMove--;
+		if ((player->isOverlap(enemy) && enemy->state == game->stateMoving)) {
+			player->impacted();
 		}
 	}
 
 	/* Disparos de la base */
-	if (baseCamp->shootAvailable() && baseCamp->enemyInRange(enemies)) {
-		Projectile* newProjectile = baseCamp->shoot(enemies);
+	if (baseCamp->shootingAction->shootAvailable() && baseCamp->shootingAction->enemyInRange(enemies)) {
+		Projectile* newProjectile = baseCamp->shootingAction->shoot(enemies);
 		if (newProjectile != NULL) {
 			space->addDynamicActor(newProjectile);
 			projectiles.push_back(newProjectile);
 		}
 	}
-	else if (!baseCamp->shootAvailable()) {
-		baseCamp->shootingCooldown--;
+	else if (!baseCamp->shootingAction->shootAvailable()) {
+		baseCamp->shootingAction->shootingCooldown--;
 	}
 
 	/* Disparo de los cannons */
 	for (auto const& cannon : cannons) {
-		if (cannon->activated && cannon->shootAvailable()) {
-			Projectile* newProjectile = cannon->shoot(enemies);
+		if (cannon->activated && cannon->shootingAction->shootAvailable()) {
+			Projectile* newProjectile = cannon->shootingAction->shoot(enemies);
 			if (newProjectile != NULL) {
 				space->addDynamicActor(newProjectile);
 				projectiles.push_back(newProjectile);
 			}
 		}
-		else if (!cannon->shootAvailable()) {
-			cannon->shootingCooldown--;
+		else if (!cannon->shootingAction->shootAvailable()) {
+			cannon->shootingAction->shootingCooldown--;
 		}
 	}
 
 	/* Colisiones , Enemy - Projectile */
-	list<Enemy*> deleteEnemies;
+	list<BaseEnemy*> deleteEnemies;
 	list<Projectile*> deleteProjectiles;
 
 	for (auto const& projectile : projectiles) {
@@ -145,6 +136,9 @@ void GameLayer::update() {
 	}
 
 	for (auto const& enemy : enemies) {
+		if (enemy->isOverlap(baseCamp) && enemy->state == game->stateMoving) {
+			enemy->impacted();
+		}
 		for (auto const& projectile : projectiles) {
 			if (enemy->isOverlap(projectile) && enemy->state == game->stateMoving && projectile->canDealDamage) {
 				bool pInList = std::find(deleteProjectiles.begin(),
@@ -224,15 +218,13 @@ void GameLayer::draw() {
 	for (auto const& cannon : cannons) {
 		cannon->draw(scrollX, scrollY);
 	}
-	//spawnerEnemy->draw(scrollX, scrollY);
 
 	textPoints->draw();
 	lifePoints->draw();
 	lifesLeftImage->draw();
-	recolectablesImage->draw();
-	recolectablesPoints->draw();
 	// Pintamos el HUD al final
 	backgroundPoints->draw();
+	currentWaveText->draw();
 
 	// HUD
 	if (game->input == game->inputMouse) {
@@ -286,12 +278,12 @@ void GameLayer::assignEnemiesTimeLeftToMove() {
 	// Asignar automaticamente tamaño a 1 cuando haya pocos enemigos
 	if (enemiesPerWave == 0) 
 		enemiesPerWave = 1;
-	int currentWave = 0;
 	int currentEnemy = 0;
 	for (auto const& enemy : enemies) {
 		currentEnemy++;
 		if ((currentEnemy - (enemiesPerWave * currentWave)) >= enemiesPerWave) {
 			currentWave++;
+			currentWaveText->content = to_string(currentWave);
 		}
 		enemy->timeLeftToMove = wavesTimeAwait[currentWave];
 	}
@@ -305,9 +297,8 @@ void GameLayer::loadMapObject(char character, float x, float y)
 				new Player(x, y, game) : 
 				new Player(savedVariables.savingCoords[0], savedVariables.savingCoords[1], game);
 			if (savedVariables.savingCoords[0] != NO_POSITION_ASSIGNED) {
-				player->lifes = savedVariables.lifesLeft;
+				baseCamp->lifes = savedVariables.lifesLeft;
 			}
-			// modificación para empezar a contar desde el suelo.
 			player->y = player->y - player->height / 2;
 			space->mainPlayer = player;
 			//space->addDynamicActor(player);
@@ -315,14 +306,12 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		}
 		case 'C': {
 			Cannon* cannon = new Cannon(x, y, game);
-			// modificación para empezar a contar desde el suelo.
 			cannon->y = cannon->y - cannon->height / 2;
 			cannons.push_back(cannon);
 			break;
 		}
 		case 'E': {
 			Enemy* enemy = new Enemy(x, y, game);
-			// modificación para empezar a contar desde el suelo.
 			enemy->y = enemy->y - enemy->height / 2;
 			enemies.push_back(enemy);
 			space->addDynamicActor(enemy);
@@ -335,15 +324,15 @@ void GameLayer::loadMapObject(char character, float x, float y)
 			break;
 		}
 		case 'S': {
-			spawnerEnemy = new SpawnerEnemy(x, y, game);
-			// modificación para empezar a contar desde el suelo.
+			SpawnerEnemy* spawnerEnemy = new SpawnerEnemy(x, y, game);
 			spawnerEnemy->y = spawnerEnemy->y - spawnerEnemy->height / 2;
+			enemies.push_back(spawnerEnemy);
+			spawnerEnemies.push_back(spawnerEnemy);
 			space->addDynamicActor(spawnerEnemy);
 			break;
 		}
 		case 'M': {
 			Tile* tile = new Tile("res/bloque_fondo_muro.png", x, y, game);
-			// modificación para empezar a contar desde el suelo.
 			tile->y = tile->y - tile->height / 2;
 			tiles.push_back(tile);
 			space->addStaticActor(tile);
@@ -573,4 +562,3 @@ void GameLayer::calculateScroll() {
 	}
 
 }
-

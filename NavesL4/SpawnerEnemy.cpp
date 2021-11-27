@@ -1,53 +1,33 @@
 #include "SpawnerEnemy.h"
 
 SpawnerEnemy::SpawnerEnemy(float x, float y, Game* game)
-	: Actor("res/enemigo2.png", x, y, 46, 34, game) {
+	: BaseEnemy("res/enemigo2.png", x, y, 80, 80, game) {
 
-	timeToGenerate = 100;
+	timeToGenerate = 40;
+	this->lifesLeft = 3;
 
-	vx = 1;
-	vxIntelligence = -1;
-	vx = vxIntelligence;
-	
-	state = game->stateMoving;
+	aDying = new Animation("res/wizard_death.png", width, height,
+		800, 80, 6, 10, false, game);
+	aMoving = new Animation("res/wizard_fly_forward.png", width, height,
+		480, 80, 6, 6, true, game);
+	aIdle = new Animation("res/wizard_idle.png", width, height,
+		800, 80, 6, 10, true, game);
+
+	animation = aIdle; // la animacion que se va a pintar
+	state = game->stateIdle;
+
 }
 
 void SpawnerEnemy::update() {
-	// Establecer velocidad
-	if (state != game->stateDying) {
-		// no está muerto y se ha quedado parado
-		if (vx == 0) {
-			vxIntelligence = vxIntelligence * -1;
-			vx = vxIntelligence;
-		}
-		if (outRight) {
-			// mover hacia la izquierda vx tiene que ser negativa
-			if (vxIntelligence > 0) {
-				vxIntelligence = vxIntelligence * -1;
-			}
-			vx = vxIntelligence;
-		}
-		if (outLeft) {
-			// mover hacia la derecha vx tiene que ser positiva
-			if (vxIntelligence < 0) {
-				vxIntelligence = vxIntelligence * -1;
-			}
-			vx = vxIntelligence;
-		}
-	}
-	else {
-		vx = 0;
-	}
-}
+	if (timeToGenerate >= 0)
+		timeToGenerate--;
 
-void SpawnerEnemy::impacted() {
-	if (state != game->stateDying) {
-		state = game->stateDying;
-	}
+	BaseEnemy::update();
 }
 
 list<Enemy*> SpawnerEnemy::spawnEnemies() {
 	list<Enemy*> ret;
+	
 	// Used for more realistic random values in X axis
 	std::random_device rd;
 	std::default_random_engine eng(rd());
@@ -57,6 +37,7 @@ list<Enemy*> SpawnerEnemy::spawnEnemies() {
 		int newEnemyX = distrX(eng);
 		Enemy* newEnemy = new Enemy(newEnemyX, y - 10, game);
 		newEnemy->vy = -1 * distrVY(eng);
+		newEnemy->state == game->stateMoving;
 		ret.push_back(newEnemy);
 	}
 	timeToGenerate = 300;

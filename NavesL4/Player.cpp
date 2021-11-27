@@ -34,7 +34,6 @@ void Player::update() {
 	if (invulnerableTime > 0) {
 		invulnerableTime--;
 	}
-
 	bool endAnimation = animation->update();
 
 	// Acabo la animación, no sabemos cual
@@ -44,7 +43,6 @@ void Player::update() {
 			state = game->stateMoving;
 		}
 	}
-
 
 	// Establecer orientación
 	if (vx > 0) {
@@ -56,14 +54,6 @@ void Player::update() {
 
 
 	// Selección de animación basada en estados
-	if (state == game->stateJumping) {
-		if (orientation == game->orientationRight) {
-			animation = aJumpingRight;
-		}
-		if (orientation == game->orientationLeft) {
-			animation = aJumpingLeft;
-		}
-	}
 	if (state == game->stateShooting) {
 		if (orientation == game->orientationRight) {
 			animation = aShootingRight;
@@ -106,7 +96,7 @@ void Player::moveY(float axis) {
 }
 
 Projectile* Player::shoot() {
-	if (shootTime == 0) {
+	if (shootTime == 0 && invulnerableTime <= 0) {
 		state = game->stateShooting;
 		shootTime = shootCadence;
 		aShootingLeft->currentFrame = 0; //"Rebobinar" animación
@@ -133,12 +123,8 @@ void Player::draw(float scrollX, float scrollY) {
 	}
 }
 
-void Player::loseLife() {
+void Player::impacted() {
 	if (invulnerableTime <= 0) {
-		if (lifes > 0) {
-			lifes--;
-			invulnerableTime = 100;
-			// 100 actualizaciones 
-		}
+		invulnerableTime = 100;
 	}
 }

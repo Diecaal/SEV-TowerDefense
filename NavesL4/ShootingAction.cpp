@@ -1,12 +1,12 @@
-#include "ShootingActor.h"
+#include "ShootingAction.h"
 
-ShootingActor::ShootingActor(string fileName, float x, float y, Game* game)
-	: Actor(fileName, x, y, 40, 32, game) {
-
+ShootingAction::ShootingAction(Actor* currentActor, Game* game) {
+	this->game = game;
+	this->currentActor = currentActor;
 }
 
 /* Dispara al enemigo mas cercano */
-Projectile* ShootingActor::shoot(list<Enemy*> enemies)
+Projectile* ShootingAction::shoot(list<BaseEnemy*> enemies)
 {
 	if (enemies.size() == 0) {
 		return NULL;
@@ -14,11 +14,11 @@ Projectile* ShootingActor::shoot(list<Enemy*> enemies)
 	float closestX = -1;
 	float closestY = -1;
 	float closestDistance = numeric_limits<float>::max();
-	for (Enemy* enemy : enemies) {
+	for (BaseEnemy* enemy : enemies) {
 		/* Si el enemigo esta muriendo no lo tenemos en cuenta */
 		if (enemy->state == game->stateMoving) {
 			/* Comprobar si el enemigo esta en rango de tiro(circulo) */
-			float distance = pow((enemy->x - x), 2) + pow((enemy->y - y), 2);
+			float distance = pow((enemy->x - currentActor->x), 2) + pow((enemy->y - currentActor->y), 2);
 			bool isInShootingRange = (distance) <= pow(shootingRange, 2);
 
 			if (isInShootingRange) {
@@ -35,22 +35,22 @@ Projectile* ShootingActor::shoot(list<Enemy*> enemies)
 	}
 
 	if (closestX != -1) {
-		shootingVector.x = closestX - x;
-		shootingVector.y = closestY - y;
+		shootingVector.x = closestX - currentActor->x;
+		shootingVector.y = closestY - currentActor->y;
 		/* Normalize vector */
 		float hypotenus = sqrt(pow(shootingVector.x, 2) + pow(shootingVector.y, 2));
 		shootingVector.x = (shootingVector.x / hypotenus) * 10;
 		shootingVector.y = (shootingVector.y / hypotenus) * 10;
 		shootingCooldown = 80;
-		return new Projectile(x, y, game, shootingVector.x, shootingVector.y);
+		return new Projectile(currentActor->x, currentActor->y, game, shootingVector.x, shootingVector.y);
 	}
 }
 
-bool ShootingActor::enemyInRange(list<Enemy*> enemies) {
-	for (Enemy* enemy : enemies) {
+bool ShootingAction::enemyInRange(list<BaseEnemy*> enemies) {
+	for (BaseEnemy* enemy : enemies) {
 		if (enemy->state != game->stateDying) {
 			/* Comprobar si el enemigo esta en rango de tiro(circulo) */
-			float distance = pow((enemy->x - x), 2) + pow((enemy->y - y), 2);
+			float distance = pow((enemy->x - currentActor->x), 2) + pow((enemy->y - currentActor->y), 2);
 			bool isInShootingRange = (distance) <= pow(shootingRange, 2);
 			if (isInShootingRange) {
 				return true;
@@ -60,6 +60,6 @@ bool ShootingActor::enemyInRange(list<Enemy*> enemies) {
 	return false;
 }
 
-bool ShootingActor::shootAvailable() {
+bool ShootingAction::shootAvailable() {
 	return shootingCooldown <= 0;
 }

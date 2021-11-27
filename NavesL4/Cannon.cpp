@@ -1,8 +1,9 @@
 #include "Cannon.h"
 
 Cannon::Cannon(float x, float y, Game* game)
-	: ShootingActor("res/bloque_tierra.png", x, y, game) {
+	: Actor("res/bloque_tierra.png", x, y, 40, 32, game) {
 
+	this->shootingAction = new ShootingAction(this, game);
 }
 
 void Cannon::setActivated() {

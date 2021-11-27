@@ -3,7 +3,7 @@
 #include "Layer.h"
 #include "Player.h"
 #include "Background.h"
-#include "Enemy.h"
+#include "BaseEnemy.h"
 #include "SpawnerEnemy.h"
 #include "Projectile.h"
 #include "Text.h"
@@ -32,7 +32,6 @@ public:
 	void mouseToControls(SDL_Event event); // USO DE MOUSE
 	Text* lifePoints;
 	Text* textPoints;
-	Text* recolectablesPoints;
 	int points;
 	int newEnemyTime = 0;
 
@@ -42,8 +41,6 @@ public:
 	int mapWidth, mapHeight;
 	list<Cannon*> cannons;
 	list<Tile*> tiles;
-	Tile* cup; // Elemento de final de nivel
-	Tile* savingPoint;
 	const int NO_POSITION_ASSIGNED = -1;
 	struct variables /* Contains the variables that will be saved after reaching saving point */
 	{
@@ -58,9 +55,8 @@ public:
 	Background* background;
 	Actor* backgroundPoints;
 	Actor* lifesLeftImage;
-	Actor* recolectablesImage;
-	list<Recolectable*> recolectables;
-	list<Enemy*> enemies;
+	list<SpawnerEnemy*> spawnerEnemies;
+	list<BaseEnemy*> enemies;
 	list<Projectile*> projectiles;
 	int recolectableItems;
 	Actor* message;
@@ -70,7 +66,6 @@ public:
 	Actor* buttonJump;
 	Actor* buttonShoot;
 	Pad* pad;
-	SpawnerEnemy* spawnerEnemy;
 	BaseCamp* baseCamp;
 
 	/* Scroll section*/
@@ -85,5 +80,7 @@ public:
 	Space* space;
 	void checkCannonCreation();
 	void assignEnemiesTimeLeftToMove();
+	int currentWave;
+	Text* currentWaveText;
 };
 

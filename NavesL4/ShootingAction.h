@@ -2,16 +2,18 @@
 
 #include "Actor.h";
 #include "Projectile.h";
-#include "Enemy.h"
+#include "BaseEnemy.h"
 #include <cmath>
 #include <list>
 
-class ShootingActor : public Actor
+class ShootingAction
 {
 public:
-	ShootingActor(string fileName, float x, float y, Game* game);
-	Projectile* shoot(list<Enemy*> enemies);
-	bool enemyInRange(list<Enemy*> enemies);
+	ShootingAction(Actor* currentActor, Game* game);
+	Game* game;
+	Actor* currentActor;
+	Projectile* shoot(list<BaseEnemy*> enemies);
+	bool enemyInRange(list<BaseEnemy*> enemies);
 	bool shootAvailable();
 	int shootingCooldown = 0;
 	float shootingRange = 160.0;

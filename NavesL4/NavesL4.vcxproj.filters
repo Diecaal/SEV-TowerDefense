@@ -87,7 +87,10 @@
     <ClCompile Include="Cannon.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingActor.cpp">
+    <ClCompile Include="ShootingAction.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseEnemy.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
   </ItemGroup>
@@ -149,7 +152,10 @@
     <ClInclude Include="Cannon.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingActor.h">
+    <ClInclude Include="ShootingAction.h">
+      <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEnemy.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
   </ItemGroup>

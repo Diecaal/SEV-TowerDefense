@@ -1,11 +1,12 @@
 #include "BaseCamp.h"
 
 BaseCamp::BaseCamp(float x, float y, Game* game) 
-	: ShootingActor("res/bloque_metal.png", x, y, game) {
+	: Actor("res/bloque_metal.png", x, y, 40, 32, game) {
 
+	this->shootingAction = new ShootingAction(this, game);
 }
 
-void BaseCamp::looseLife() {
+void BaseCamp::loseLife() {
 	this->lifes--;
 }
 

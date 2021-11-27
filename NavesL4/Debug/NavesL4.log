@@ -1,44 +1,5 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (NavesL4.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  GameLayer.cpp
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.h(17,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.h(18,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\ShootingActor.h(3,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\ShootingActor.h(4,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.h(19,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(19,95): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(31,66): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(38,105): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(39,89): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(47,94): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(48,72): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(267,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(268,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(275,22): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(276,21): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(306,77): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(306,45): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(494,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(494,26): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(497,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(500,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(500,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(503,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(503,33): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(509,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(509,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(512,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(512,33): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(515,51): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(515,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(516,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(530,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(530,26): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(535,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(535,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(538,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(538,33): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(549,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(556,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(564,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\NavesL4\GameLayer.cpp(571,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-  NavesL4.vcxproj -> C:\Users\UO271506\Desktop\1.Universidad - copia\SEV\TowerDefense-UO271506\Debug\TowerDefense_UO271506.exe
+  Enemy.cpp
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\Enemy.cpp(4,36): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\Enemy.cpp(4,33): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+  NavesL4.vcxproj -> D:\1.Universidad\SEV\SEV-TowerDefense\Debug\TowerDefense_UO271506.exe

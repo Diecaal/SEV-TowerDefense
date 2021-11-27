@@ -24,10 +24,9 @@ public:
 	void update();
 	void moveX(float axis);
 	void moveY(float axis);
-	void loseLife();
+	void impacted();
 	int shootCadence = 30;
 	int shootTime = 0;
-	int lifes = 3;
 	int orientation;
 	int state;
 	int invulnerableTime = 0;
