@@ -53,6 +53,7 @@ public:
 	/* Actors section */
 	Player* player;
 	Background* background;
+	Background* backgroundNiebla;
 	Actor* backgroundPoints;
 	Actor* lifesLeftImage;
 	list<SpawnerEnemy*> spawnerEnemies;
@@ -63,7 +64,6 @@ public:
 	bool pause;
 	bool controlContinue = false;
 	// Elementos de interfaz
-	Actor* buttonJump;
 	Actor* buttonShoot;
 	Pad* pad;
 	BaseCamp* baseCamp;

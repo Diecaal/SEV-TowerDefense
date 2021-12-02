@@ -16,20 +16,21 @@ void BaseEnemy::actorToFollow(Actor* actor) {
 		directionX = directionX / hypotenus;
 		directionY = directionY / hypotenus;
 
-		if (isMeleeAttacker) {
-			vx = directionX * 1.2;
-			vy = directionY * 1.2;
+		if (abs(actor->x - x) <= closestDistanceAllowedToActor
+			&& abs(actor->y - y) <= closestDistanceAllowedToActor) {
+			vx = 0;
+			vy = 0;
+
+			if (isMeleeAttacker)
+				state = game->stateAttacking;
+			else
+				state = game->stateIdle;
 		}
 		else {
-			if (abs(actor->x - x) <= 60 && abs(actor->y - y) <= 60) {
-				vx = 0;
-				vy = 0;
-			}
-			else {
-				vx = directionX * 1.2;
-				vy = directionY * 1.2;
-			}
+			vx = directionX * 1.0;
+			vy = directionY * 1.0;
 		}
+
 	}
 }
 
@@ -38,8 +39,11 @@ void BaseEnemy::setTimeLeftToMove(int timeLeft) {
 }
 
 void BaseEnemy::impacted() {
-	if (state != game->stateDying) {
-		state = game->stateDying;
+	lifesLeft--;
+	if (lifesLeft <= 0) {
+		if (state != game->stateDying) {
+			state = game->stateDying;
+		}
 	}
 }
 
@@ -51,17 +55,44 @@ void BaseEnemy::update() {
 	if (timeLeftToMove > 0)
 		timeLeftToMove--;
 
-	// Actualizar la animación
-	bool endAnimation = animation->update();
 	if (timeLeftToMove <= 0 && state == game->stateIdle)
-		this->state = game->stateMoving;
+		state = game->stateMoving;
 
-	if (state == game->stateMoving) {
-		animation = aMoving;
-	}
+	if (lifesLeft <= 0)
+		state = game->stateDying;
+
 	if (state == game->stateDying) {
 		animation = aDying;
 	}
+
+	if (state == game->stateAttacking) {
+		animation = aAttacking;
+	}
+
+	// Establecer orientación
+	if (vx > 0) {
+		orientation = game->orientationRight;
+	}
+	if (vx < 0) {
+		orientation = game->orientationLeft;
+	}
+
+	if (state == game->stateMoving) {
+		if (vx != 0) {
+			if (orientation == game->orientationRight) {
+				animation = aMovingRight;
+			}
+			if (orientation == game->orientationLeft) {
+				animation = aMovingLeft;
+			}
+		}
+		if (vx == 0 && !isMeleeAttacker) {
+			animation = aIdle;
+		}
+	}
+
+	// Actualizar la animación
+	bool endAnimation = animation->update();
 
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
@@ -76,4 +107,10 @@ void BaseEnemy::update() {
 		vx = 0;
 		vy = 0;
 	}
+
+}
+
+bool BaseEnemy::canBeAttacked()
+{
+	return timeLeftToMove <= 0;
 }

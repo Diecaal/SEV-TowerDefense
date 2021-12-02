@@ -1,7 +1,7 @@
 #include "BaseCamp.h"
 
 BaseCamp::BaseCamp(float x, float y, Game* game) 
-	: Actor("res/bloque_metal.png", x, y, 40, 32, game) {
+	: Actor("res/basecamp.png", x, y, 121, 132, game) {
 
 	this->shootingAction = new ShootingAction(this, game);
 }

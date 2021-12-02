@@ -3,7 +3,6 @@
 #include "Projectile.h" 
 #include "Actor.h"
 #include "ShootingAction.h"
-
 #include <cmath>
 #include <list>
 

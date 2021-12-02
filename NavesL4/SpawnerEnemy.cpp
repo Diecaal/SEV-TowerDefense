@@ -8,13 +8,17 @@ SpawnerEnemy::SpawnerEnemy(float x, float y, Game* game)
 
 	aDying = new Animation("res/wizard_death.png", width, height,
 		800, 80, 6, 10, false, game);
-	aMoving = new Animation("res/wizard_fly_forward.png", width, height,
+	aMovingRight = new Animation("res/wizard_fly_forward_right.png", width, height,
+		480, 80, 6, 6, true, game);
+	aMovingLeft = new Animation("res/wizard_fly_forward_left.png", width, height,
 		480, 80, 6, 6, true, game);
 	aIdle = new Animation("res/wizard_idle.png", width, height,
 		800, 80, 6, 10, true, game);
 
 	animation = aIdle; // la animacion que se va a pintar
 	state = game->stateIdle;
+
+	closestDistanceAllowedToActor = 160;
 
 }
 
@@ -31,8 +35,8 @@ list<Enemy*> SpawnerEnemy::spawnEnemies() {
 	// Used for more realistic random values in X axis
 	std::random_device rd;
 	std::default_random_engine eng(rd());
-	std::uniform_int_distribution<int> distrX(x-80, x+80); 
-	std::uniform_int_distribution<int> distrVY(8, 18);
+	std::uniform_int_distribution<int> distrX(x-100, x+100); 
+	std::uniform_int_distribution<int> distrVY(0, 20);
 	for (int i = 0; i < enemiesToGenerate; i++) {
 		int newEnemyX = distrX(eng);
 		Enemy* newEnemy = new Enemy(newEnemyX, y - 10, game);

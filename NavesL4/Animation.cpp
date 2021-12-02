@@ -50,6 +50,7 @@ bool Animation::update() {
 
 		}
 	}
+
 	//Actualizar el rectangulo del source (siguiente frame)
 	source.x = currentFrame * frameWidth;
 	return false; // luego lo cambiamos

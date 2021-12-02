@@ -11,8 +11,7 @@ GameLayer::GameLayer(Game* game)
 
 void GameLayer::init() {
 	pad = new Pad(WIDTH * 0.15, HEIGHT * 0.80, game);
-	buttonJump = new Actor("res/boton_salto.png", WIDTH * 0.9, HEIGHT * 0.55, 100, 100, game);
-	buttonShoot = new Actor("res/boton_disparo.png", WIDTH * 0.75, HEIGHT * 0.83, 100, 100, game);
+	buttonShoot = new Actor("res/boton_disparo.png", WIDTH * 0.85, HEIGHT * 0.83, 100, 100, game);
 	points = 0;
 
 	space = new Space(0);
@@ -28,7 +27,8 @@ void GameLayer::init() {
 	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
 	textPoints->content = to_string(points); // C++ no cambia datos automaticamente bien
 
-	background = new Background("res/fondo.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
+	background = new Background("res/mapa_diejin_720x480.jpg", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
+	backgroundNiebla = new Background("res/niebla_hueca_720x480.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundPoints = new Actor("res/icono_puntos.png",
 		WIDTH * 0.85, HEIGHT * 0.05, 24, 24, game); // WIDTH/HEIGHT * x -> mas sencillo cuadrar en pantalla
 
@@ -38,11 +38,12 @@ void GameLayer::init() {
 
 	spawnerEnemies.clear();
 	enemies.clear(); // Vaciar por si reiniciamos el juego
+	cannons.clear();
 	projectiles.clear(); // Vaciar por si reiniciamos el juego
 
 	loadMap("res/" + to_string(game->currentLevel) + ".txt");
 
-	lifesLeftImage = new Actor("res/icono_vidas.png", WIDTH * 0.07, HEIGHT * 0.08, 40, 40, game);
+	lifesLeftImage = new Actor("res/corazon.png", WIDTH * 0.07, HEIGHT * 0.08, 40, 40, game);
 	lifePoints = new Text("Lifes here", WIDTH * 0.14, HEIGHT * 0.07, game);
 	lifePoints->content = to_string(baseCamp->lifes);
 }
@@ -73,10 +74,7 @@ void GameLayer::update() {
 
 	/* Colisiones */
 	for (auto const& enemy : enemies) {
-		// If enemies are in the process of diying they wont kill you
-		if (baseCamp->isOverlap(enemy) && enemy->state == game->stateMoving) {
-			baseCamp->loseLife();
-			lifePoints->content = to_string(baseCamp->lifes);
+		if (baseCamp->isOverlap(enemy) && enemy->state == game->stateAttacking) {
 			if (baseCamp->lifes <= 0) {
 				lifePoints->content = to_string(baseCamp->lifes);
 				message = new Actor("res/mensaje_perder.png", WIDTH * 0.5, HEIGHT * 0.5,
@@ -109,6 +107,8 @@ void GameLayer::update() {
 		if (cannon->activated && cannon->shootingAction->shootAvailable()) {
 			Projectile* newProjectile = cannon->shootingAction->shoot(enemies);
 			if (newProjectile != NULL) {
+				// Apuntara el caño a la posicion donde hara el disparo
+				cannon->setLastProjectileCoords(newProjectile);
 				space->addDynamicActor(newProjectile);
 				projectiles.push_back(newProjectile);
 			}
@@ -135,12 +135,21 @@ void GameLayer::update() {
 		}
 	}
 
+	/* Colisiones enemigos con proyectiles */
 	for (auto const& enemy : enemies) {
-		if (enemy->isOverlap(baseCamp) && enemy->state == game->stateMoving) {
-			enemy->impacted();
+		/* Enemigos melee atacan a la base */
+		if (enemy->isOverlap(baseCamp) && enemy->state == game->stateAttacking) {
+			if (enemy->attackingCoolDown <= 0) {
+				baseCamp->loseLife();
+				lifePoints->content = to_string(baseCamp->lifes);
+				enemy->currentAttackingCoolDown = enemy->attackingCoolDown;
+			}
+			else {
+				enemy->currentAttackingCoolDown--;
+			}
 		}
 		for (auto const& projectile : projectiles) {
-			if (enemy->isOverlap(projectile) && enemy->state == game->stateMoving && projectile->canDealDamage) {
+			if (enemy->isOverlap(projectile) && enemy->canBeAttacked() && projectile->canDealDamage) {
 				bool pInList = std::find(deleteProjectiles.begin(),
 					deleteProjectiles.end(),
 					projectile) != deleteProjectiles.end();
@@ -217,24 +226,24 @@ void GameLayer::draw() {
 
 	for (auto const& cannon : cannons) {
 		cannon->draw(scrollX, scrollY);
-	}
-
-	textPoints->draw();
-	lifePoints->draw();
-	lifesLeftImage->draw();
-	// Pintamos el HUD al final
-	backgroundPoints->draw();
-	currentWaveText->draw();
+	}	
 
 	// HUD
 	if (game->input == game->inputMouse) {
-		buttonJump->draw(); // NO TIENEN SCROLL, POSICION FIJA
 		buttonShoot->draw(); // NO TIENEN SCROLL, POSICION FIJA
 		pad->draw(); // NO TIENEN SCROLL, POSICION FIJA
 	}
 	if (pause) {
 		message->draw();
 	}
+
+	backgroundNiebla->draw();
+	textPoints->draw();
+	lifePoints->draw();
+	lifesLeftImage->draw();
+	// Pintamos el HUD al final
+	backgroundPoints->draw();
+	currentWaveText->draw();
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
@@ -301,7 +310,6 @@ void GameLayer::loadMapObject(char character, float x, float y)
 			}
 			player->y = player->y - player->height / 2;
 			space->mainPlayer = player;
-			//space->addDynamicActor(player);
 			break;
 		}
 		case 'C': {
@@ -320,7 +328,6 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		case 'B': {
 			baseCamp = new BaseCamp(x, y, game);
 			baseCamp->y = baseCamp->y - baseCamp->height / 2;
-			//space->addStaticActor(baseCamp);
 			break;
 		}
 		case 'S': {
@@ -484,13 +491,11 @@ void GameLayer::mouseToControls(SDL_Event event) {
 			pad->clicked = true;
 			// CLICK TAMBIEN TE MUEVE
 			controlMoveX = pad->getOrientationX(motionX);
+			controlMoveY = pad->getOrientationY(motionY);
 		}
 		// Comprobamo si el click se ha hecho dentro de nuestro actor para disparar
 		if (buttonShoot->containsPoint(motionX, motionY)) {
 			controlShoot = true;
-		}
-		if (buttonJump->containsPoint(motionX, motionY)) {
-			controlMoveY = -1;
 		}
 	}
 	// Cada vez que se mueve en cualquier lugar de la pantalla
@@ -498,18 +503,20 @@ void GameLayer::mouseToControls(SDL_Event event) {
 		if (buttonShoot->containsPoint(motionX, motionY) == false) {
 			controlShoot = false;
 		}
-		if (buttonJump->containsPoint(motionX, motionY) == false) {
-			controlMoveY = 0;
-		}
 		if (pad->clicked && pad->containsPoint(motionX, motionY)) {
 			controlMoveX = pad->getOrientationX(motionX);
+			controlMoveY = pad->getOrientationY(motionY);
 			// Rango de -20 a 20 es igual que 0
 			if (controlMoveX > -20 && controlMoveX < 20) {
 				controlMoveX = 0;
 			}
+			if (controlMoveY > -20 && controlMoveY < 20) {
+				controlMoveY = 0;
+			}
 			else {
 				pad->clicked = false; // han sacado el ratón del pad
 				controlMoveX = 0;
+				controlMoveY = 0;
 			}
 
 		}
@@ -520,12 +527,10 @@ void GameLayer::mouseToControls(SDL_Event event) {
 			pad->clicked = false;
 			// LEVANTAR EL CLICK TAMBIEN TE PARA
 			controlMoveX = 0;
+			controlMoveY = 0;
 		}
 		if (buttonShoot->containsPoint(motionX, motionY)) {
 			controlShoot = false;
-		}
-		if (buttonJump->containsPoint(motionX, motionY)) {
-			controlMoveY = 0;
 		}
 	}
 }

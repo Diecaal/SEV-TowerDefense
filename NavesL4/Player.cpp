@@ -39,7 +39,7 @@ void Player::update() {
 	// Acabo la animación, no sabemos cual
 	if (endAnimation) {
 		// Estaba disparando
-		if (state == game->stateShooting) {
+		if (state == game->stateAttacking) {
 			state = game->stateMoving;
 		}
 	}
@@ -54,7 +54,7 @@ void Player::update() {
 
 
 	// Selección de animación basada en estados
-	if (state == game->stateShooting) {
+	if (state == game->stateAttacking) {
 		if (orientation == game->orientationRight) {
 			animation = aShootingRight;
 		}
@@ -96,8 +96,8 @@ void Player::moveY(float axis) {
 }
 
 Projectile* Player::shoot() {
-	if (shootTime == 0 && invulnerableTime <= 0) {
-		state = game->stateShooting;
+	if (shootTime <= 0 && invulnerableTime <= 0) {
+		state = game->stateAttacking;
 		shootTime = shootCadence;
 		aShootingLeft->currentFrame = 0; //"Rebobinar" animación
 		aShootingRight->currentFrame = 0; //"Rebobinar" animación

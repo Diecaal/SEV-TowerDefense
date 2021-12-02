@@ -10,8 +10,8 @@ using namespace std;
 #include <map> 
 
 // Valores generales
-#define WIDTH 720
-#define HEIGHT 480
+#define WIDTH 900
+#define HEIGHT 600
 
 #include "Layer.h"
 class Layer;
@@ -50,7 +50,7 @@ public:
 	int const stateMoving = 1;
 	int const stateDying = 2;
 	int const stateDead = 3;
-	int const stateShooting = 4;
+	int const stateAttacking = 4;
 	int const stateIdle = 5;
 
 	/* Orientation for the actors */
