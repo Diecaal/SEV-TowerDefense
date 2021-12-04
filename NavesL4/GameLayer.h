@@ -14,10 +14,11 @@
 #include <sstream> // Leer líneas / String
 #include "Space.h" 
 #include "Pad.h"
-#include "Recolectable.h";
-#include "BaseCamp.h";
-#include "Cannon.h";
+#include "BaseCamp.h"
+#include "Audio.h" 
+#include "Cannon.h"
 #include <map>
+#include "LifeGenerator.h"
 
 class GameLayer : public Layer
 {
@@ -27,7 +28,7 @@ public:
 	void processControls() override;
 	void update() override;
 	void draw() override;
-
+	Audio* audioBackground;
 	void keysToControls(SDL_Event event);
 	void mouseToControls(SDL_Event event); // USO DE MOUSE
 	Text* lifePoints;
@@ -42,6 +43,7 @@ public:
 	int mapWidth, mapHeight;
 	list<Cannon*> cannons;
 	list<Tile*> tiles;
+	list<LifeGenerator*> lifeGenerators;
 	struct variables /* Contains the variables that will be saved after reaching saving point */
 	{
 		public :
@@ -49,6 +51,7 @@ public:
 		int baseCampLifesLeft = NO_INFORMATION_ASSIGNED;
 		int points = NO_INFORMATION_ASSIGNED;
 		list<Cannon*> activatedCannons;
+		list<LifeGenerator*> activatedLifeGenerators;
 	};
 	struct variables savedVariables;
 
@@ -81,7 +84,9 @@ public:
 
 	Space* space;
 	void checkCannonCreation();
+	void checkLifeGeneratorCreation();
 	void assignEnemiesTimeLeftToMove();
 	Text* currentWaveText;
+	void clearSavedVariables();
 };
 

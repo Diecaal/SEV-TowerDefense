@@ -25,6 +25,8 @@ SpawnerEnemy::SpawnerEnemy(float x, float y, Game* game)
 void SpawnerEnemy::update() {
 	if (timeToGenerate >= 0)
 		timeToGenerate--;
+	if (impactedEffectTime >= 0)
+		impactedEffectTime--;
 
 	BaseEnemy::update();
 }
@@ -46,4 +48,22 @@ list<Enemy*> SpawnerEnemy::spawnEnemies() {
 	}
 	timeToGenerate = 300;
 	return ret;
+}
+
+void SpawnerEnemy::impacted() {
+	if (impactedEffectTime <= 0) {
+		impactedEffectTime = 100;
+	}
+	BaseEnemy::impacted();
+}
+
+void SpawnerEnemy::draw(float scrollX, float scrollY) {
+	if (impactedEffectTime <= 0 || state == game->stateDying) {
+		animation->draw(x - scrollX, y - scrollY);
+	}
+	else {
+		if (impactedEffectTime % 10 >= 0 && impactedEffectTime % 10 <= 5) {
+			animation->draw(x - scrollX, y - scrollY);
+		}
+	}
 }

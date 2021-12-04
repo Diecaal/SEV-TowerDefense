@@ -10,9 +10,13 @@ GameLayer::GameLayer(Game* game)
 }
 
 void GameLayer::init() {
+	if (game->currentLevel == 0) {
+		audioBackground = new Audio("res/musica_ambiente.mp3", true);
+		audioBackground->play();
+	}
+
 	pad = new Pad(WIDTH * 0.15, HEIGHT * 0.80, game);
 	buttonShoot = new Actor("res/boton_disparo.png", WIDTH * 0.85, HEIGHT * 0.83, 100, 100, game);
-	points = 0;
 
 	space = new Space(0);
 	scrollX = 0;
@@ -26,19 +30,24 @@ void GameLayer::init() {
 	backgroundPoints = new Actor("res/icono_puntos.png",
 		WIDTH * 0.85, HEIGHT * 0.05, 24, 24, game); // WIDTH/HEIGHT * x -> mas sencillo cuadrar en pantalla
 
-	currentWaveText = new Text("Wave here", WIDTH * 0.30, HEIGHT * 0.07, game);
+	currentWaveText = new Text("Wave here", WIDTH * 0.26, HEIGHT * 0.06, game);
 	currentWaveText->content = "WAVE: " + to_string(game->currentLevel + 1) + "/" + to_string(game->finalLevel+1);
 
 	spawnerEnemies.clear();
 	enemies.clear(); // Vaciar por si reiniciamos el juego
 	cannons.clear();
+	lifeGenerators.clear();
 	projectiles.clear(); // Vaciar por si reiniciamos el juego
 
 	loadMap("res/" + to_string(game->currentLevel) + ".txt");
 
-	lifesLeftImage = new Actor("res/corazon.png", WIDTH * 0.07, HEIGHT * 0.08, 40, 40, game);
-	lifePoints = new Text("Lifes here", WIDTH * 0.14, HEIGHT * 0.07, game);
+	lifesLeftImage = new Actor("res/corazon.png", WIDTH * 0.07, HEIGHT * 0.06, 44, 44, game);
+	lifePoints = new Text("Lifes here", WIDTH * 0.13, HEIGHT * 0.06, game);
 	
+	// En caso de que el jugador ya ha jugado y vuelve a la wave 0, resetear los items guardados
+	if (game->currentLevel == 0) {
+		clearSavedVariables();
+	}
 
 	/* Carga entre niveles de los items de niveles anteriores */
 	if (savedVariables.points != savedVariables.NO_INFORMATION_ASSIGNED) {
@@ -48,6 +57,15 @@ void GameLayer::init() {
 			for (auto const& gameCannon : cannons) {
 				if (savedCannon->x == gameCannon->x && savedCannon->y == gameCannon->y) {
 					gameCannon->setActivated();
+				}
+			}
+		}
+		for (auto const& savedLifeGenerator : savedVariables.activatedLifeGenerators) {
+			for (auto const& lifeGeneratorGame : lifeGenerators) {
+				if (savedLifeGenerator->x == lifeGeneratorGame->x && savedLifeGenerator->y == lifeGeneratorGame->y) {
+					if(baseCamp->lifes < baseCamp->maxLifes)
+						baseCamp->lifes++;
+					lifeGeneratorGame->setActivated();
 				}
 			}
 		}
@@ -63,7 +81,6 @@ void GameLayer::update() {
 	}
 
 	space->update();
-	//background->update();
 
 	player->update();
 	for (auto const& enemy : enemies) {
@@ -71,21 +88,32 @@ void GameLayer::update() {
 		enemy->update();
 	}
 
-	// Nivel superado
+	// Nivel superado - todos los enemigos de la ronda han sido eliminados
 	if (enemies.size() <= 0) {
-		savedVariables.baseCampLifesLeft = baseCamp->lifes;
 		savedVariables.points = points;
 		for (auto const& cannon : cannons) {
 			if (cannon->activated) {
 				savedVariables.activatedCannons.push_back(cannon);
 			}
 		}
+		for (auto const& lifeGenerator : lifeGenerators) {
+			if (lifeGenerator->activated) {
+				savedVariables.activatedLifeGenerators.push_back(lifeGenerator);
+			}
+		}
+		// Por cada oleada se le dara una vida al jugador
+		if (baseCamp->lifes < baseCamp->maxLifes) {
+			savedVariables.baseCampLifesLeft = baseCamp->lifes+1;
+		}
+		else {
+			savedVariables.baseCampLifesLeft = baseCamp->lifes;
+		}
 		game->currentLevel++;
 		if (game->currentLevel > game->finalLevel) {
 			game->currentLevel = 0;
 		}
 		message = new Actor("res/mensaje_ganar.png", WIDTH * 0.5, HEIGHT * 0.5,
-			WIDTH, HEIGHT, game);
+			WIDTH-150, HEIGHT-150, game);
 		pause = true;
 		init();
 	}
@@ -101,7 +129,7 @@ void GameLayer::update() {
 		}
 	}
 
-	/* Colisiones */
+	/* Colisiones - Juego perdido */
 	for (auto const& enemy : enemies) {
 		/* Enemigos melee atacan a la base */
 		if (enemy->state == game->stateAttacking) {
@@ -232,8 +260,20 @@ void GameLayer::checkCannonCreation() {
 	}
 }
 
+void GameLayer::checkLifeGeneratorCreation() {
+	/* Comprobar la creacion de un nuevo cannon */
+	for (auto const& lifeGenerator : lifeGenerators) {
+		if (player->isOverlap(lifeGenerator)) {
+			if (points >= 5) {
+				points -= 5;
+				textPoints->content = to_string(points);
+				lifeGenerator->setActivated();
+			}
+		}
+	}
+}
+
 void GameLayer::draw() {
-	//calculateScroll();
 	background->draw();
 
 	for (auto const& tile : tiles) {
@@ -242,6 +282,10 @@ void GameLayer::draw() {
 
 	for (auto const& projectile : projectiles) {
 		projectile->draw(scrollX, scrollY);
+	}
+
+	for (auto const& lifeGenerator : lifeGenerators) {
+		lifeGenerator->draw(scrollX, scrollY);
 	}
 
 	baseCamp->draw(scrollX, scrollY);
@@ -261,9 +305,6 @@ void GameLayer::draw() {
 		buttonShoot->draw(); // NO TIENEN SCROLL, POSICION FIJA
 		pad->draw(); // NO TIENEN SCROLL, POSICION FIJA
 	}
-	if (pause) {
-		message->draw();
-	}
 
 	backgroundNiebla->draw();
 	textPoints->draw();
@@ -272,6 +313,10 @@ void GameLayer::draw() {
 	// Pintamos el HUD al final
 	backgroundPoints->draw();
 	currentWaveText->draw();
+
+	if (pause) {
+		message->draw();
+	}
 
 	SDL_RenderPresent(game->renderer); // Renderiza
 }
@@ -330,19 +375,16 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	switch (character) {
 		case '1': {
 			player = new Player(x, y, game);
-			player->y = player->y - player->height / 2;
 			space->mainPlayer = player;
 			break;
 		}
 		case 'C': {
 			Cannon* cannon = new Cannon(x, y, game);
-			cannon->y = cannon->y - cannon->height / 2;
 			cannons.push_back(cannon);
 			break;
 		}
 		case 'E': {
 			Enemy* enemy = new Enemy(x, y, game);
-			enemy->y = enemy->y - enemy->height / 2;
 			enemies.push_back(enemy);
 			space->addDynamicActor(enemy);
 			break;
@@ -354,7 +396,6 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		}
 		case 'S': {
 			SpawnerEnemy* spawnerEnemy = new SpawnerEnemy(x, y, game);
-			spawnerEnemy->y = spawnerEnemy->y - spawnerEnemy->height / 2;
 			enemies.push_back(spawnerEnemy);
 			spawnerEnemies.push_back(spawnerEnemy);
 			space->addDynamicActor(spawnerEnemy);
@@ -362,20 +403,15 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		}
 		case 'M': {
 			Tile* tile = new Tile("res/bloque_fondo_muro.png", x, y, game);
-			tile->y = tile->y - tile->height / 2;
 			tiles.push_back(tile);
 			space->addStaticActor(tile);
 			break;
 		}
-		/*
-		case 'R': {
-			Recolectable* recolectable = new Recolectable(x, y, game);
-			// modificación para empezar a contar desde el suelo.
-			recolectable->y = recolectable->y - recolectable->height / 2;
-			recolectables.push_back(recolectable);
+		case 'L': {
+			LifeGenerator* lifeGenerator = new LifeGenerator(x, y, game);
+			lifeGenerators.push_back(lifeGenerator);
 			break;
 		}
-		*/
 	}
 }
 
@@ -439,6 +475,7 @@ void GameLayer::processControls() {
 
 void GameLayer::keysToControls(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
+		controlContinue = true;
 		int code = event.key.keysym.sym;
 		// Pulsada
 		switch (code) {
@@ -462,9 +499,11 @@ void GameLayer::keysToControls(SDL_Event event) {
 			break;
 		case SDLK_c: // intentar creacion de cannon
 			checkCannonCreation();
+			checkLifeGeneratorCreation();
 			break;
 		case SDLK_SPACE: // dispara
-			controlShoot = true;
+			if(!pause)
+				controlShoot = true;
 			break;
 		}
 	}
@@ -588,4 +627,11 @@ void GameLayer::calculateScroll() {
 		}
 	}
 
+}
+
+void GameLayer::clearSavedVariables() {
+	savedVariables.activatedCannons.clear();
+	savedVariables.activatedCannons.clear();
+	savedVariables.baseCampLifesLeft = baseCamp->maxLifes;
+	savedVariables.points = 0;
 }

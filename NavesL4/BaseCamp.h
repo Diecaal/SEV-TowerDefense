@@ -12,5 +12,6 @@ public:
 	BaseCamp(float x, float y, Game* game);
 	ShootingAction* shootingAction;
 	void loseLife();
-	int lifes = 10;
+	const int maxLifes = 6;
+	int lifes = 6;
 };

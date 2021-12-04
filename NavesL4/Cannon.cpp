@@ -34,13 +34,13 @@ void Cannon::draw(float scrollX, float scrollY) {
 	destination.y = y - height / 2 - scrollY;
 	destination.w = width;
 	destination.h = height;
-	// Modificar para que la referencia sea el punto central
-	
+	// Modificar para que la referencia sea el punto 
 	if (lastVx != -1) {
-		double degrees = atan2(lastVx, lastVy);
-		degrees *= 180.0;
-		degrees /= M_PI;
+		float hypotenus = sqrt(pow(lastVx, 2) + pow(lastVy, 2));
+		lastVx = (lastVx / hypotenus);
+		lastVy = (lastVy / hypotenus);
 
+		double degrees = ((atan2(lastVy, lastVx) / M_PI) * 180.0) + 80.0;
 		SDL_RenderCopyEx(game->renderer,
 			texture, &source, &destination, degrees, NULL, SDL_FLIP_NONE);
 	}

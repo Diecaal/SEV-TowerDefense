@@ -16,7 +16,7 @@ public:
 	/* Los enemigos se moveran cuando tengan a 0 timeLeftToMove */
 	int timeLeftToMove;
 	int lifesLeft = 1;
-	void impacted(); // Recibe impacto y pone animación de morir
+	virtual void impacted(); // Recibe impacto y pone animación de morir
 	bool isMeleeAttacker = false;
 	int orientation;
 	int closestDistanceAllowedToActor;

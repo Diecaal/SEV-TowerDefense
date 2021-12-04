@@ -78,9 +78,6 @@
     <ClCompile Include="SpawnerEnemy.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
-    <ClCompile Include="Recolectable.cpp">
-      <Filter>Archivos de origen\actores</Filter>
-    </ClCompile>
     <ClCompile Include="BaseCamp.cpp">
       <Filter>Archivos de origen\actores</Filter>
     </ClCompile>
@@ -92,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="BaseEnemy.cpp">
       <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeGenerator.cpp">
+      <Filter>Archivos de origen\actores</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,9 +146,6 @@
     <ClInclude Include="SpawnerEnemy.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
-    <ClInclude Include="Recolectable.h">
-      <Filter>Archivos de encabezado\actores</Filter>
-    </ClInclude>
     <ClInclude Include="BaseCamp.h">
       <Filter>Archivos de encabezado\actores</Filter>
     </ClInclude>
@@ -157,6 +157,12 @@
     </ClInclude>
     <ClInclude Include="BaseEnemy.h">
       <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeGenerator.h">
+      <Filter>Archivos de encabezado\actores</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
