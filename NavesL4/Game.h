@@ -38,7 +38,7 @@ public:
 
 	/* Game levels */
 	int currentLevel = 0;
-	int finalLevel = 3;
+	int finalLevel = 5;
 
 	/* Input section */
 	int input;

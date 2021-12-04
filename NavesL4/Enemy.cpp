@@ -12,7 +12,7 @@ Enemy::Enemy(float x, float y, Game* game)
 	aIdle = new Animation("res/knight_idle.png", width, height,
 		168, 42, 6, 4, true, game);
 	aAttacking = new Animation("res/knight_attack.png", width, height,
-		418, 42, 10, 10, true, game);
+		418, 42, 4, 10, true, game);
 
 	isMeleeAttacker = true;
 

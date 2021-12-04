@@ -12,5 +12,5 @@ public:
 	BaseCamp(float x, float y, Game* game);
 	ShootingAction* shootingAction;
 	void loseLife();
-	int lifes = 3;
+	int lifes = 10;
 };

@@ -18,23 +18,16 @@ void GameLayer::init() {
 	scrollX = 0;
 	scrollY = 0;
 	tiles.clear();
-
-	// Resetear el struct con variables guardadas
-	savedVariables.savingCoords[0] = NO_POSITION_ASSIGNED;
-	savedVariables.savingCoords[1] = NO_POSITION_ASSIGNED;
-	savedVariables.lifesLeft = 3;
-
+	
 	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
-	textPoints->content = to_string(points); // C++ no cambia datos automaticamente bien
-
+	
 	background = new Background("res/mapa_diejin_720x480.jpg", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundNiebla = new Background("res/niebla_hueca_720x480.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundPoints = new Actor("res/icono_puntos.png",
 		WIDTH * 0.85, HEIGHT * 0.05, 24, 24, game); // WIDTH/HEIGHT * x -> mas sencillo cuadrar en pantalla
 
-	currentWave = 0;
-	currentWaveText = new Text("Wave here", WIDTH * 0.35, HEIGHT * 0.07, game);
-	currentWaveText->content = to_string(currentWave);
+	currentWaveText = new Text("Wave here", WIDTH * 0.30, HEIGHT * 0.07, game);
+	currentWaveText->content = "WAVE: " + to_string(game->currentLevel + 1) + "/" + to_string(game->finalLevel+1);
 
 	spawnerEnemies.clear();
 	enemies.clear(); // Vaciar por si reiniciamos el juego
@@ -45,6 +38,22 @@ void GameLayer::init() {
 
 	lifesLeftImage = new Actor("res/corazon.png", WIDTH * 0.07, HEIGHT * 0.08, 40, 40, game);
 	lifePoints = new Text("Lifes here", WIDTH * 0.14, HEIGHT * 0.07, game);
+	
+
+	/* Carga entre niveles de los items de niveles anteriores */
+	if (savedVariables.points != savedVariables.NO_INFORMATION_ASSIGNED) {
+		baseCamp->lifes = savedVariables.baseCampLifesLeft;
+		points = savedVariables.points;
+		for (auto const& savedCannon : savedVariables.activatedCannons) {
+			for (auto const& gameCannon : cannons) {
+				if (savedCannon->x == gameCannon->x && savedCannon->y == gameCannon->y) {
+					gameCannon->setActivated();
+				}
+			}
+		}
+	}
+
+	textPoints->content = to_string(points);
 	lifePoints->content = to_string(baseCamp->lifes);
 }
 
@@ -62,6 +71,26 @@ void GameLayer::update() {
 		enemy->update();
 	}
 
+	// Nivel superado
+	if (enemies.size() <= 0) {
+		savedVariables.baseCampLifesLeft = baseCamp->lifes;
+		savedVariables.points = points;
+		for (auto const& cannon : cannons) {
+			if (cannon->activated) {
+				savedVariables.activatedCannons.push_back(cannon);
+			}
+		}
+		game->currentLevel++;
+		if (game->currentLevel > game->finalLevel) {
+			game->currentLevel = 0;
+		}
+		message = new Actor("res/mensaje_ganar.png", WIDTH * 0.5, HEIGHT * 0.5,
+			WIDTH, HEIGHT, game);
+		pause = true;
+		init();
+	}
+
+
 	/* Generacion de enemigos por los spawnerEnemies */
 	for (auto const& spawnerEnemy : spawnerEnemies) {
 		if (spawnerEnemy->state == game->stateMoving && spawnerEnemy->timeToGenerate <= 0) {
@@ -74,15 +103,24 @@ void GameLayer::update() {
 
 	/* Colisiones */
 	for (auto const& enemy : enemies) {
-		if (baseCamp->isOverlap(enemy) && enemy->state == game->stateAttacking) {
-			if (baseCamp->lifes <= 0) {
+		/* Enemigos melee atacan a la base */
+		if (enemy->state == game->stateAttacking) {
+			if (enemy->currentAttackingCoolDown <= 0) {
+				baseCamp->loseLife();
 				lifePoints->content = to_string(baseCamp->lifes);
-				message = new Actor("res/mensaje_perder.png", WIDTH * 0.5, HEIGHT * 0.5,
-					WIDTH, HEIGHT, game);
-				pause = true;
-				game->currentLevel = 0;
-				init();
-				break;
+				enemy->currentAttackingCoolDown = enemy->attackingCoolDown;
+				if (baseCamp->lifes <= 0) {
+					lifePoints->content = to_string(baseCamp->lifes);
+					message = new Actor("res/mensaje_perder.png", WIDTH * 0.5, HEIGHT * 0.5,
+						WIDTH, HEIGHT, game);
+					pause = true;
+					game->currentLevel = 0;
+					init();
+					break;
+				}
+			}
+			else {
+				enemy->currentAttackingCoolDown--;
 			}
 		}
 		if ((player->isOverlap(enemy) && enemy->state == game->stateMoving)) {
@@ -137,17 +175,6 @@ void GameLayer::update() {
 
 	/* Colisiones enemigos con proyectiles */
 	for (auto const& enemy : enemies) {
-		/* Enemigos melee atacan a la base */
-		if (enemy->isOverlap(baseCamp) && enemy->state == game->stateAttacking) {
-			if (enemy->attackingCoolDown <= 0) {
-				baseCamp->loseLife();
-				lifePoints->content = to_string(baseCamp->lifes);
-				enemy->currentAttackingCoolDown = enemy->attackingCoolDown;
-			}
-			else {
-				enemy->currentAttackingCoolDown--;
-			}
-		}
 		for (auto const& projectile : projectiles) {
 			if (enemy->isOverlap(projectile) && enemy->canBeAttacked() && projectile->canDealDamage) {
 				bool pInList = std::find(deleteProjectiles.begin(),
@@ -207,8 +234,8 @@ void GameLayer::checkCannonCreation() {
 
 void GameLayer::draw() {
 	//calculateScroll();
-
 	background->draw();
+
 	for (auto const& tile : tiles) {
 		tile->draw(scrollX, scrollY);
 	}
@@ -217,7 +244,6 @@ void GameLayer::draw() {
 		projectile->draw(scrollX, scrollY);
 	}
 
-	player->draw(scrollX, scrollY);
 	baseCamp->draw(scrollX, scrollY);
 
 	for (auto const& enemy : enemies) {
@@ -227,6 +253,8 @@ void GameLayer::draw() {
 	for (auto const& cannon : cannons) {
 		cannon->draw(scrollX, scrollY);
 	}	
+
+	player->draw(scrollX, scrollY);
 
 	// HUD
 	if (game->input == game->inputMouse) {
@@ -281,18 +309,17 @@ void GameLayer::loadMap(string name) {
 }
 
 void GameLayer::assignEnemiesTimeLeftToMove() {
-	int numberOfWaves = 3;
-	int wavesTimeAwait[] = {100, 400, 700};
-	int enemiesPerWave = enemies.size() / numberOfWaves;
+	int currentWave = 0;
+	int numberOfWavesPerLevel = 2;
+	int wavesTimeAwait[] = {50, 200};
+	int enemiesPerWave = enemies.size() / numberOfWavesPerLevel;
 	// Asignar automaticamente tamaño a 1 cuando haya pocos enemigos
-	if (enemiesPerWave == 0) 
-		enemiesPerWave = 1;
+	if (enemiesPerWave == 0) enemiesPerWave = 1;
 	int currentEnemy = 0;
 	for (auto const& enemy : enemies) {
 		currentEnemy++;
 		if ((currentEnemy - (enemiesPerWave * currentWave)) >= enemiesPerWave) {
 			currentWave++;
-			currentWaveText->content = to_string(currentWave);
 		}
 		enemy->timeLeftToMove = wavesTimeAwait[currentWave];
 	}
@@ -302,12 +329,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 {
 	switch (character) {
 		case '1': {
-			player = (savedVariables.savingCoords[0] == NO_POSITION_ASSIGNED) ?
-				new Player(x, y, game) : 
-				new Player(savedVariables.savingCoords[0], savedVariables.savingCoords[1], game);
-			if (savedVariables.savingCoords[0] != NO_POSITION_ASSIGNED) {
-				baseCamp->lifes = savedVariables.lifesLeft;
-			}
+			player = new Player(x, y, game);
 			player->y = player->y - player->height / 2;
 			space->mainPlayer = player;
 			break;

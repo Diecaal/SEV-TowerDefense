@@ -34,6 +34,7 @@ public:
 	Text* textPoints;
 	int points;
 	int newEnemyTime = 0;
+	void showCurrentWave();
 
 	/* Tiles methods */
 	void loadMap(string name);
@@ -41,12 +42,13 @@ public:
 	int mapWidth, mapHeight;
 	list<Cannon*> cannons;
 	list<Tile*> tiles;
-	const int NO_POSITION_ASSIGNED = -1;
 	struct variables /* Contains the variables that will be saved after reaching saving point */
 	{
-		const int NO_POSITION_ASSIGNED = -1;
-		int savingCoords[2] = { NO_POSITION_ASSIGNED, NO_POSITION_ASSIGNED }; // [0]->x / [1]->y
-		int lifesLeft = NO_POSITION_ASSIGNED;
+		public :
+			const int NO_INFORMATION_ASSIGNED = -1;
+		int baseCampLifesLeft = NO_INFORMATION_ASSIGNED;
+		int points = NO_INFORMATION_ASSIGNED;
+		list<Cannon*> activatedCannons;
 	};
 	struct variables savedVariables;
 
@@ -80,7 +82,6 @@ public:
 	Space* space;
 	void checkCannonCreation();
 	void assignEnemiesTimeLeftToMove();
-	int currentWave;
 	Text* currentWaveText;
 };
 

@@ -112,5 +112,5 @@ void BaseEnemy::update() {
 
 bool BaseEnemy::canBeAttacked()
 {
-	return timeLeftToMove <= 0;
+	return timeLeftToMove <= 0 && state != game->stateDying;
 }
