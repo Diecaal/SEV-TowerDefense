@@ -4,6 +4,7 @@
 #include "Projectile.h";
 #include "BaseEnemy.h"
 #include <cmath>
+#include "Audio.h"
 #include <list>
 
 class ShootingAction
@@ -12,6 +13,7 @@ public:
 	ShootingAction(Actor* currentActor, Game* game);
 	Game* game;
 	Actor* currentActor;
+	Audio* audioShoot;
 	Projectile* shoot(list<BaseEnemy*> enemies);
 	bool enemyInRange(list<BaseEnemy*> enemies);
 	bool shootAvailable();

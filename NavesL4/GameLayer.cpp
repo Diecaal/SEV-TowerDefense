@@ -1,4 +1,5 @@
 #include "GameLayer.h"
+#include <thread>
 
 GameLayer::GameLayer(Game* game)
 	: Layer(game) {
@@ -22,13 +23,15 @@ void GameLayer::init() {
 	scrollX = 0;
 	scrollY = 0;
 	tiles.clear();
+	gameWon = false;
+
 	
-	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.04, game);
+	textPoints = new Text("hola", WIDTH * 0.92, HEIGHT * 0.05, game);
 	
 	background = new Background("res/mapa_diejin_720x480.jpg", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
 	backgroundNiebla = new Background("res/niebla_hueca_720x480.png", WIDTH * 0.5, HEIGHT * 0.5, -1, game);
-	backgroundPoints = new Actor("res/icono_puntos.png",
-		WIDTH * 0.85, HEIGHT * 0.05, 24, 24, game); // WIDTH/HEIGHT * x -> mas sencillo cuadrar en pantalla
+	backgroundPoints = new Actor("res/moneda.png",
+		WIDTH * 0.86, HEIGHT * 0.05, 40, 40, game); // WIDTH/HEIGHT * x -> mas sencillo cuadrar en pantalla
 
 	currentWaveText = new Text("Wave here", WIDTH * 0.26, HEIGHT * 0.06, game);
 	currentWaveText->content = "WAVE: " + to_string(game->currentLevel + 1) + "/" + to_string(game->finalLevel+1);
@@ -40,7 +43,7 @@ void GameLayer::init() {
 	projectiles.clear(); // Vaciar por si reiniciamos el juego
 
 	loadMap("res/" + to_string(game->currentLevel) + ".txt");
-
+	
 	lifesLeftImage = new Actor("res/corazon.png", WIDTH * 0.07, HEIGHT * 0.06, 44, 44, game);
 	lifePoints = new Text("Lifes here", WIDTH * 0.13, HEIGHT * 0.06, game);
 	
@@ -110,11 +113,20 @@ void GameLayer::update() {
 		}
 		game->currentLevel++;
 		if (game->currentLevel > game->finalLevel) {
+			// Hacer que vuelva al menu
+			message = new Actor("res/mensaje_ganar_final.png", WIDTH * 0.5, HEIGHT * 0.5,
+				WIDTH - 50, HEIGHT - 50, game);
 			game->currentLevel = 0;
+			pause = true;
+			gameWon = true;
+			draw();
 		}
-		message = new Actor("res/mensaje_ganar.png", WIDTH * 0.5, HEIGHT * 0.5,
-			WIDTH-150, HEIGHT-150, game);
-		pause = true;
+		else {
+			message = new Actor("res/mensaje_ganar.png", WIDTH * 0.5, HEIGHT * 0.5,
+				WIDTH - 150, HEIGHT - 150, game);
+			pause = true;
+		}
+
 		init();
 	}
 
@@ -140,7 +152,7 @@ void GameLayer::update() {
 				if (baseCamp->lifes <= 0) {
 					lifePoints->content = to_string(baseCamp->lifes);
 					message = new Actor("res/mensaje_perder.png", WIDTH * 0.5, HEIGHT * 0.5,
-						WIDTH, HEIGHT, game);
+						WIDTH - 150, HEIGHT - 150, game);
 					pause = true;
 					game->currentLevel = 0;
 					init();
@@ -214,8 +226,7 @@ void GameLayer::update() {
 					deleteProjectiles.push_back(projectile);
 				}
 
-				enemy->impacted();
-				points++;
+				points += enemy->impacted();
 				textPoints->content = to_string(points);
 			}
 		}
@@ -356,7 +367,7 @@ void GameLayer::loadMap(string name) {
 void GameLayer::assignEnemiesTimeLeftToMove() {
 	int currentWave = 0;
 	int numberOfWavesPerLevel = 2;
-	int wavesTimeAwait[] = {50, 200};
+	int wavesTimeAwait[] = {100, 400};
 	int enemiesPerWave = enemies.size() / numberOfWavesPerLevel;
 	// Asignar automaticamente tamaño a 1 cuando haya pocos enemigos
 	if (enemiesPerWave == 0) enemiesPerWave = 1;
@@ -536,9 +547,7 @@ void GameLayer::keysToControls(SDL_Event event) {
 			controlShoot = false;
 			break;
 		}
-
 	}
-
 }
 
 void GameLayer::mouseToControls(SDL_Event event) {

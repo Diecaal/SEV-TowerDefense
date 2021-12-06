@@ -3,6 +3,8 @@
 Enemy::Enemy(float x, float y, Game* game)
 	: BaseEnemy("res/enemigo.png", x, y, 46, 46, game) {
 	
+	this->points = 1;
+
 	aDying = new Animation("res/knight_death_animation.png", width, height,
 		378, 42, 6, 9, false, game);
 	aMovingRight = new Animation("res/knight_walk_animation_right.png", width, height,

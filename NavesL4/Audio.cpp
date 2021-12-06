@@ -5,7 +5,8 @@ Audio::Audio(string filename, bool loop) {
 
 	if (loop) {
 		// Uso la Librería Mixer - mp3
-		Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096); // 2 canales
+		Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096); // 2 
+		Mix_VolumeMusic(68);
 		mix = Mix_LoadMUS(filename.c_str());
 	}
 	else {
@@ -28,6 +29,7 @@ Audio::~Audio() {
 
 void Audio::play() {
 	if (loop) {
+		Mix_VolumeMusic(68);
 		Mix_PlayMusic(mix, -1);
 		// -1 se repite sin parar
 	}

@@ -5,7 +5,7 @@ SpawnerEnemy::SpawnerEnemy(float x, float y, Game* game)
 
 	timeToGenerate = 40;
 	this->lifesLeft = 3;
-
+	this->points = 4;
 	aDying = new Animation("res/wizard_death.png", width, height,
 		800, 80, 6, 10, false, game);
 	aMovingRight = new Animation("res/wizard_fly_forward_right.png", width, height,
@@ -50,11 +50,11 @@ list<Enemy*> SpawnerEnemy::spawnEnemies() {
 	return ret;
 }
 
-void SpawnerEnemy::impacted() {
+int SpawnerEnemy::impacted() {
 	if (impactedEffectTime <= 0) {
 		impactedEffectTime = 100;
 	}
-	BaseEnemy::impacted();
+	return BaseEnemy::impacted();
 }
 
 void SpawnerEnemy::draw(float scrollX, float scrollY) {

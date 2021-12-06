@@ -15,7 +15,7 @@ public:
 	int enemiesToGenerate = 3;
 	int timeToGenerate;
 	int impactedEffectTime = 0;
-	void impacted();
+	int impacted();
 	void draw(float scrollX = 0, float scrollY = 0) override; // Va a sobrescribir
 };
 

@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include "Projectile.h" 
+#include "Audio.h"
 #include "Animation.h" // incluir animacion 
 
 class Player : public Actor
@@ -9,6 +10,7 @@ class Player : public Actor
 public:
 	Player(float x, float y, Game* game);
 	Projectile* shoot();
+	Audio* audioShoot;
 	void draw(float scrollX = 0, float scrollY = 0) override; // Va a sobrescribir
 	/* Todas las animaciones posibles */
 	Animation* aIdleRight;
@@ -17,8 +19,6 @@ public:
 	Animation* aRunningLeft;
 	Animation* aShootingRight;
 	Animation* aShootingLeft;
-	Animation* aJumpingRight;
-	Animation* aJumpingLeft;
 	Animation* animation; // Referencia a la animación mostrada
 
 	void update();

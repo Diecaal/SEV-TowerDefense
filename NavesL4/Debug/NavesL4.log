@@ -1,31 +1,31 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (NavesL4.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   GameLayer.cpp
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\Audio.h(7,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
 D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\ShootingAction.h(3,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
 D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\ShootingAction.h(4,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\Audio.h(7,10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(44,90): warning C4305: 'argumento': truncamiento de 'double' a 'float'
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(341,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(342,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(349,22): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(350,21): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(551,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(551,26): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(554,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(555,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(558,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(558,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(564,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(564,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(567,51): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(567,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(568,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(569,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(587,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(587,26): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(593,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(593,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(604,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(611,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(619,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(626,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(47,90): warning C4305: 'argumento': truncamiento de 'double' a 'float'
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(352,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(353,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(360,22): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(361,21): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(560,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(560,26): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(563,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(564,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(567,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(567,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(573,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(573,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(576,51): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(576,42): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(577,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(578,39): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(596,35): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(596,26): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(602,43): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(602,34): warning C4244: 'argumento': conversión de 'float' a 'int'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(613,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(620,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(628,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+D:\1.Universidad\SEV\SEV-TowerDefense\NavesL4\GameLayer.cpp(635,24): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
   NavesL4.vcxproj -> D:\1.Universidad\SEV\SEV-TowerDefense\Debug\TowerDefense_UO271506.exe

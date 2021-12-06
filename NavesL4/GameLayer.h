@@ -54,6 +54,7 @@ public:
 		list<LifeGenerator*> activatedLifeGenerators;
 	};
 	struct variables savedVariables;
+	bool gameWon = false;
 
 	/* Actors section */
 	Player* player;

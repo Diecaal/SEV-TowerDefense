@@ -38,13 +38,15 @@ void BaseEnemy::setTimeLeftToMove(int timeLeft) {
 	this->timeLeftToMove = timeLeft;
 }
 
-void BaseEnemy::impacted() {
+int BaseEnemy::impacted() {
 	lifesLeft--;
 	if (lifesLeft <= 0) {
+		return points;
 		if (state != game->stateDying) {
 			state = game->stateDying;
 		}
 	}
+	return 0;
 }
 
 void BaseEnemy::draw(float scrollX, float scrollY) {

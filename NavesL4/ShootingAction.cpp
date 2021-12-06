@@ -3,6 +3,8 @@
 ShootingAction::ShootingAction(Actor* currentActor, Game* game) {
 	this->game = game;
 	this->currentActor = currentActor;
+
+	audioShoot = new Audio("res/cannon_sound.wav", false);
 }
 
 /* Dispara al enemigo mas cercano */
@@ -42,6 +44,7 @@ Projectile* ShootingAction::shoot(list<BaseEnemy*> enemies)
 		shootingVector.x = (shootingVector.x / hypotenus) * 10;
 		shootingVector.y = (shootingVector.y / hypotenus) * 10;
 		shootingCooldown = 80;
+		audioShoot->play();
 		return new Projectile(currentActor->x, currentActor->y, game, shootingVector.x, shootingVector.y);
 	}
 }

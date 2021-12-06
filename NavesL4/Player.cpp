@@ -1,58 +1,39 @@
 #include "Player.h"
 
 Player::Player(float x, float y, Game* game)
-	: Actor("res/jugador.png", x, y, 35, 35, game) {
+	: Actor("res/jugador.png", x, y, 48, 48, game) {
+
+	audioShoot = new Audio("res/magic_spell.wav", false);
 
 	orientation = game->orientationRight;
 	state = game->stateMoving; // estado inicial sera moviendose
 
-	/* Animaciones de disparo */
-	aShootingRight = new Animation("res/jugador_disparando_derecha.png",
-		width, height, 160, 40, 6, 4, false, game);
-	aShootingLeft = new Animation("res/jugador_disparando_izquierda.png",
-		width, height, 160, 40, 6, 4, false, game);
-	/* Animaciones de movimiento */
-	aIdleRight = new Animation("res/jugador_idle_derecha.png", width, height,
-		320, 40, 6, 8, true, game);
-	aIdleLeft = new Animation("res/jugador_idle_izquierda.png", width, height,
-		320, 40, 6, 8, true, game);
-	aRunningRight = new Animation("res/jugador_corriendo_derecha.png", width, height,
-		320, 40, 6, 8, true, game);
-	aRunningLeft = new Animation("res/jugador_corriendo_izquierda.png", width, height,
-		320, 40, 6, 8, true, game);
-	aJumpingRight = new Animation("res/jugador_saltando_derecha.png",
-		width, height, 160, 40, 6, 4, true, game);
-	aJumpingLeft = new Animation("res/jugador_saltando_izquierda.png",
-		width, height, 160, 40, 6, 4, true, game);
+	aShootingRight = new Animation("res/player_attack_right.png", width, height, 
+		423, 48, 4, 8, false, game);
+	aShootingLeft = new Animation("res/player_attack_left.png",width, height, 
+		420, 48, 4, 8, false, game);
+	aIdleRight = new Animation("res/player_idle_right.png", width, height,
+		273, 48, 6, 6, true, game);
+	aIdleLeft = new Animation("res/player_idle_left.png", width, height,
+		273, 48, 6, 6, true, game);
+	aRunningRight = new Animation("res/player_run_right.png", width, height,
+		403, 48, 6, 8, true, game);
+	aRunningLeft = new Animation("res/player_run_left.png", width, height,
+		402, 48, 6, 8, true, game);
 
 	animation = aIdleRight;
 }
 
 void Player::update() {
-	state = game->stateMoving;
-	   
 	if (invulnerableTime > 0) {
 		invulnerableTime--;
 	}
+	if (shootTime > 0) {
+		shootTime--;
+	}
+
 	bool endAnimation = animation->update();
-
-	// Acabo la animación, no sabemos cual
-	if (endAnimation) {
-		// Estaba disparando
-		if (state == game->stateAttacking) {
-			state = game->stateMoving;
-		}
-	}
-
-	// Establecer orientación
-	if (vx > 0) {
-		orientation = game->orientationRight;
-	}
-	if (vx < 0) {
-		orientation = game->orientationLeft;
-	}
-
-
+	
 	// Selección de animación basada en estados
 	if (state == game->stateAttacking) {
 		if (orientation == game->orientationRight) {
@@ -63,6 +44,13 @@ void Player::update() {
 		}
 	}
 	if (state == game->stateMoving) {
+		// Establecer orientación
+		if (vx > 0) {
+			orientation = game->orientationRight;
+		}
+		if (vx < 0) {
+			orientation = game->orientationLeft;
+		}
 		if (vx != 0) {
 			if (orientation == game->orientationRight) {
 				animation = aRunningRight;
@@ -81,9 +69,12 @@ void Player::update() {
 		}
 	}
 
-
-	if (shootTime > 0) {
-		shootTime--;
+	// Acabo la animación, no sabemos cual
+	if (endAnimation) {
+		// Estaba disparando
+		if (state == game->stateAttacking) {
+			state = game->stateMoving;
+		}
 	}
 }
 
@@ -101,7 +92,8 @@ Projectile* Player::shoot() {
 		shootTime = shootCadence;
 		aShootingLeft->currentFrame = 0; //"Rebobinar" animación
 		aShootingRight->currentFrame = 0; //"Rebobinar" animación
-		Projectile* projectile = new Projectile(x, y, game);
+		audioShoot->play();
+		Projectile* projectile = new Projectile(x, y, game, true);
 		if (orientation == game->orientationLeft) {
 			projectile->vx = projectile->vx * -1; // Invertir
 		}
